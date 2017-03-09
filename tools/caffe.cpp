@@ -11,8 +11,14 @@ namespace bp = boost::python;
 #include <vector>
 
 #include "boost/algorithm/string.hpp"
+#ifdef　_MSC_VER   
+#define ssize_t ssize_t_
+#endif
 #include "caffe/caffe.hpp"
 #include "caffe/util/signal_handler.h"
+#ifdef　_MSC_VER
+#undef ssize_t
+#endif
 
 using caffe::Blob;
 using caffe::Caffe;
@@ -147,6 +153,7 @@ caffe::SolverAction::Enum GetRequestedAction(
     return caffe::SolverAction::NONE;
   }
   LOG(FATAL) << "Invalid signal effect \""<< flag_value << "\" was specified";
+  return caffe::SolverAction::NONE;
 }
 
 // Train / Finetune a model.

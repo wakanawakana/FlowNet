@@ -20,8 +20,12 @@
 #include <iostream>
 #include <fstream>
 #include <omp.h>
+#if _MSC_VER
+#include <direct.h>
+#include <windows.h>
+#else
 #include <sys/dir.h>
-
+#endif
 
 using std::max;
 
@@ -66,14 +70,25 @@ void FLOWriterLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
 
     CHECK_EQ(channels, 2) << "FLOWRITER layer input must have two channels";
 
-    DIR* dir = opendir(this->layer_param_.writer_param().folder().c_str());
+#if _MSC_VER
+	HANDLE hFind;
+	WIN32_FIND_DATA FindFileData;
+	hFind = FindFirstFile((LPCWSTR)this->layer_param_.writer_param().folder().c_str(), &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE){
+		FindClose(hFind);
+	} else {
+		int retval = _mkdir(this->layer_param_.writer_param().folder().c_str());
+	}
+#else
+	DIR* dir = opendir(this->layer_param_.writer_param().folder().c_str());
     if (dir)
         closedir(dir);
     else if (ENOENT == errno) {
-        std::string cmd("mkdir -p " + this->layer_param_.writer_param().folder());
+		std::string cmd("mkdir -p " + this->layer_param_.writer_param().folder());
         int retval = std::system(cmd.c_str());
         (void)retval;
     }
+#endif
 }
 
 template <typename Dtype>

@@ -7,6 +7,11 @@
 #include "caffe/util/math_functions.hpp"
 #include "caffe/util/rng.hpp"
 
+#if _MSC_VER
+#include <intrin.h>
+#define __builtin_popcount __popcnt
+#define __builtin_popcountl __popcnt64
+#endif
 namespace caffe {
 
 template<>

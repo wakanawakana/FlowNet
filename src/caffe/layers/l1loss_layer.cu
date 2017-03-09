@@ -72,7 +72,11 @@ void L1LossLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
   if(bottom.size() > 1) {
     diff_layer_->Forward(bottom, diff_top_vec_);
   }
-  
+#ifdef _DEBUG
+  if (bottom[0]->cpu_data()[0] == bottom[0]->cpu_data()[0]){}// wakana
+  if (bottom[1]->cpu_data()[0] == bottom[1]->cpu_data()[0]){}// wakana
+  if (diffptr->cpu_data()[0] == diffptr->cpu_data()[0]){}// wakana
+#endif
   // if necessary, compute the number of not-NaNs
   int count = bottom[0]->count();
   int num = bottom[0]->num();
@@ -97,7 +101,10 @@ void L1LossLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     
     square_layer_->Forward(diff_top_vec_, square_top_vec_);
     sum_layer_->Forward(square_top_vec_, sum_top_vec_);
-    
+#ifdef _DEBUG
+	if (square_top_vec_[0]->cpu_data()[0] == square_top_vec_[0]->cpu_data()[0]){}// wakana
+	if (sum_top_vec_[0]->cpu_data()[0] == sum_top_vec_[0]->cpu_data()[0]){}// wakana
+#endif
     // Mask plateau in summed blob (only one channel):
     if(this->layer_param_.l1_loss_param().plateau() > 0) {
       float plateau_val_squared = this->layer_param_.l1_loss_param().plateau() * this->layer_param_.l1_loss_param().plateau();
@@ -115,6 +122,9 @@ void L1LossLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     sqrt_layer_->Forward(sum_top_vec_, sqrt_top_vec_);
     // Note sign_ is set to all ones in Reshape
     caffe_gpu_dot(sqrt_output_.count(), sqrt_output_.gpu_data(), sign_.gpu_data(), &dot);
+#ifdef _DEBUG
+	if (sqrt_output_.cpu_data()[0] == sqrt_output_.cpu_data()[0]){}// wakana
+#endif
   }
   else {    
     // Mask plateau:
@@ -134,7 +144,10 @@ void L1LossLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     ComputeSign<Dtype><<<CAFFE_GET_BLOCKS(count), CAFFE_CUDA_NUM_THREADS>>>(
         count, diffptr->gpu_data(), sign_.mutable_gpu_data());
     CUDA_POST_KERNEL_CHECK;
-    caffe_gpu_dot(count, diffptr->gpu_data(), sign_.gpu_data(), &dot); 
+    caffe_gpu_dot(count, diffptr->gpu_data(), sign_.gpu_data(), &dot);
+#ifdef _DEBUG
+	if (diffptr->cpu_data()[0] == diffptr->cpu_data()[0]){}// wakana
+#endif
   }
   loss = dot / normalize_coeff_; 
   top[0]->mutable_cpu_data()[0] = loss;
@@ -167,7 +180,11 @@ void L1LossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
       sum_layer_->Backward(sum_top_vec_, prop_down, square_top_vec_);
       square_layer_->Backward(square_top_vec_, prop_down, diff_top_vec_);
       
-    
+#ifdef _DEBUG
+	  if (sum_top_vec_[0]->cpu_diff()[0] == sum_top_vec_[0]->cpu_data()[0]){}// wakana
+	  if (square_top_vec_[0]->cpu_diff()[0] == square_top_vec_[0]->cpu_data()[0]){}// wakana
+#endif
+
     }
     else {    
       caffe_gpu_axpby(diffptr->count(), alpha, sign_.gpu_data(), 

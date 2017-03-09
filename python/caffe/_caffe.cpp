@@ -14,7 +14,13 @@
 #include <vector>  // NOLINT(build/include_order)
 #include <fstream>  // NOLINT
 
+#ifdef _MSC_VER
+#define ssize_t ssize_t_
+#endif
 #include "caffe/caffe.hpp"
+#ifdef _MSC_VER
+#undef sssize_t
+#endif
 #include "caffe/python_layer.hpp"
 #include "caffe/sgd_solvers.hpp"
 

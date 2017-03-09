@@ -8,7 +8,13 @@
 #include "caffe/layer.hpp"
 #include "caffe/layer_factory.hpp"
 #include "caffe/proto/caffe.pb.h"
+#ifdef _MSC_VER
+#define ssize_t ssize_t_
+#endif
 #include "caffe/vision_layers.hpp"
+#ifdef _MSC_VER
+#undef ssize_t
+#endif
 
 #ifdef WITH_PYTHON_LAYER
 #include "caffe/python_layer.hpp"
@@ -176,7 +182,7 @@ REGISTER_LAYER_CREATOR(Softmax, GetSoftmaxLayer);
 
 // Get tanh layer according to engine.
 template <typename Dtype>
-shared_ptr<Layer<Dtype> > GetTanHLayer(const LayerParameter& param) {
+boost::shared_ptr<Layer<Dtype> > GetTanHLayer(const LayerParameter& param) {
   TanHParameter_Engine engine = param.tanh_param().engine();
   if (engine == TanHParameter_Engine_DEFAULT) {
     engine = TanHParameter_Engine_CAFFE;
@@ -185,10 +191,10 @@ shared_ptr<Layer<Dtype> > GetTanHLayer(const LayerParameter& param) {
 #endif
   }
   if (engine == TanHParameter_Engine_CAFFE) {
-    return shared_ptr<Layer<Dtype> >(new TanHLayer<Dtype>(param));
+	  return shared_ptr<Layer<Dtype> >(new TanHLayer<Dtype>(param));
 #ifdef USE_CUDNN
   } else if (engine == TanHParameter_Engine_CUDNN) {
-    return shared_ptr<Layer<Dtype> >(new CuDNNTanHLayer<Dtype>(param));
+	  return shared_ptr<Layer<Dtype> >(new CuDNNTanHLayer<Dtype>(param));
 #endif
   } else {
     LOG(FATAL) << "Layer " << param.name() << " has unknown engine.";
@@ -217,3 +223,4 @@ REGISTER_LAYER_CREATOR(Python, GetPythonLayer);
 // Layers that use their constructor as their default creator should be
 // registered in their corresponding cpp files. Do not register them here.
 }  // namespace caffe
+

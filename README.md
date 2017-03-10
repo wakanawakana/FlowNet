@@ -1,4 +1,4 @@
-# Flowne for Windows
+# Flownet for Windows
 ~~~
 working system
 win7 64bit

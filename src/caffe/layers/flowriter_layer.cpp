@@ -20,7 +20,7 @@
 #include <iostream>
 #include <fstream>
 #include <omp.h>
-#if _MSC_VER
+#if defined (_MSC_VER)
 #include <direct.h>
 #include <windows.h>
 #else
@@ -70,7 +70,7 @@ void FLOWriterLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
 
     CHECK_EQ(channels, 2) << "FLOWRITER layer input must have two channels";
 
-#if _MSC_VER
+#if defined (_MSC_VER)
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
 	hFind = FindFirstFile((LPCWSTR)this->layer_param_.writer_param().folder().c_str(), &FindFileData);

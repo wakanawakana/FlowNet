@@ -53,7 +53,7 @@ namespace caffe {
 			(temp_files_subpath / caffe::format_int(next_temp_file++, 9)).string();
 	}
 
-#ifdef _MSC_VER
+#if defined (_MSC_VER)
 
 	inline void RemoveCaffeTempDir() {
 		boost::system::error_code err;

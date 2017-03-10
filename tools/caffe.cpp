@@ -11,12 +11,12 @@ namespace bp = boost::python;
 #include <vector>
 
 #include "boost/algorithm/string.hpp"
-#ifdef　_MSC_VER   
+#if defined (_MSC_VER)
 #define ssize_t ssize_t_
 #endif
 #include "caffe/caffe.hpp"
 #include "caffe/util/signal_handler.h"
-#ifdef　_MSC_VER
+#if defined (_MSC_VER)
 #undef ssize_t
 #endif
 

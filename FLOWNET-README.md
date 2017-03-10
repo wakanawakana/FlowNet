@@ -13,11 +13,11 @@ To get started with FlowNet, first compile caffe, by configuring a
 
 then make with 
 
-    $ make -j 5 all tools
+    $ make -j 5 all
 
 Go to this folder:
 
-    ./flownet-release/models/flownet/
+    ./flownet/models/flownet/
 
 From this folder you can execute the scripts we prepared:
 To try out FlowNetS on a sample image pair, run

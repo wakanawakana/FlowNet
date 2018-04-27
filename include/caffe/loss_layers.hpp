@@ -1,19 +1,21 @@
 #ifndef CAFFE_LOSS_LAYERS_HPP_
 #define CAFFE_LOSS_LAYERS_HPP_
 
-#include <string>
-#include <utility>
 #include <vector>
 
 #include "caffe/blob.hpp"
 #include "caffe/layer.hpp"
-#include "caffe/neuron_layers.hpp"
 #include "caffe/proto/caffe.pb.h"
+
+#include "caffe/layers/conv_layer.hpp"
+#include "caffe/layers/loss_layer.hpp"
+#include "caffe/layers/eltwise_layer.hpp"
+#include "caffe/layers/power_layer.hpp"
 
 namespace caffe {
 
+#if 0
 const float kLOG_THRESHOLD = 1e-20;
-
 /**
  * @brief Computes the classification accuracy for a one-of-many
  *        classification task.
@@ -92,7 +94,8 @@ class AccuracyLayer : public Layer<Dtype> {
   /// Keeps counts of the number of samples per class.
   Blob<Dtype> nums_buffer_;
 };
-
+#endif
+#if 0
 /**
  * @brief An interface for Layer%s that take two Blob%s as input -- usually
  *        (1) predictions and (2) ground-truth labels -- and output a
@@ -129,7 +132,8 @@ class LossLayer : public Layer<Dtype> {
     return bottom_index != 1;
   }
 };
-
+#endif
+#if 0
 /**
  * @brief Computes the contrastive loss @f$
  *          E = \frac{1}{2N} \sum\limits_{n=1}^N \left(y\right) d^2 +
@@ -214,7 +218,8 @@ class ContrastiveLossLayer : public LossLayer<Dtype> {
   Blob<Dtype> diff_sq_;  // tmp storage for gpu forward pass
   Blob<Dtype> summer_vec_;  // tmp storage for gpu forward pass
 };
-
+#endif
+#if 0
 /**
  * @brief Computes the Euclidean (L2) loss @f$
  *          E = \frac{1}{2N} \sum\limits_{n=1}^N \left| \left| \hat{y}_n - y_n
@@ -305,7 +310,8 @@ class EuclideanLossLayer : public LossLayer<Dtype> {
 
   Blob<Dtype> diff_;
 };
-
+#endif
+#if 0
 /**
  * @brief Computes the hinge loss for a one-of-many classification task.
  *
@@ -392,7 +398,8 @@ class HingeLossLayer : public LossLayer<Dtype> {
   virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 /**
  * @brief A generalization of MultinomialLogisticLossLayer that takes an
  *        "information gain" (infogain) matrix specifying the "value" of all label
@@ -486,7 +493,7 @@ class InfogainLossLayer : public LossLayer<Dtype> {
 
   Blob<Dtype> infogain_;
 };
-
+#endif
 
 /**
  * @brief Computes the L1 or L2 Loss, optionally on the L2 norm along channels
@@ -494,8 +501,8 @@ class InfogainLossLayer : public LossLayer<Dtype> {
  */
 
 //Forward declare
-template <typename Dtype> class ConvolutionLayer;
-template <typename Dtype> class EltwiseLayer;
+//template <typename Dtype> class ConvolutionLayer;
+//template <typename Dtype> class EltwiseLayer;
 
 template <typename Dtype>
 class L1LossLayer : public LossLayer<Dtype> {
@@ -547,7 +554,7 @@ class L1LossLayer : public LossLayer<Dtype> {
   vector<Blob<Dtype>*> sqrt_top_vec_;
 };
 
-
+#if 0
 /**
  * @brief Computes the multinomial logistic loss for a one-of-many
  *        classification task, directly taking a predicted probability
@@ -623,7 +630,8 @@ class MultinomialLogisticLossLayer : public LossLayer<Dtype> {
   virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 /**
  * @brief Computes the cross-entropy (logistic) loss @f$
  *          E = \frac{-1}{n} \sum\limits_{n=1}^N \left[
@@ -716,7 +724,8 @@ class SigmoidCrossEntropyLossLayer : public LossLayer<Dtype> {
   /// top vector holder to call the underlying SigmoidLayer::Forward
   vector<Blob<Dtype>*> sigmoid_top_vec_;
 };
-
+#endif
+#if 0
 // Forward declare SoftmaxLayer for use in SoftmaxWithLossLayer.
 template <typename Dtype> class SoftmaxLayer;
 
@@ -832,7 +841,7 @@ class SoftmaxWithLossLayer : public LossLayer<Dtype> {
 
   int softmax_axis_, outer_num_, inner_num_;
 };
-
+#endif
 }  // namespace caffe
 
 #endif  // CAFFE_LOSS_LAYERS_HPP_

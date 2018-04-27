@@ -1,5 +1,6 @@
 #ifndef CAFFE_VISION_LAYERS_HPP_
 #define CAFFE_VISION_LAYERS_HPP_
+// flownet extended layer
 
 #include <string>
 #include <utility>
@@ -14,9 +15,34 @@
 #include "caffe/neuron_layers.hpp"
 #include "caffe/proto/caffe.pb.h"
 
-namespace caffe {
+#include "caffe/layers/conv_layer.hpp"
+#include "caffe/layers/deconv_layer.hpp"
+#include "caffe/layers/lrn_layer.hpp"
+#include "caffe/layers/pooling_layer.hpp"
+#include "caffe/layers/relu_layer.hpp"
+#include "caffe/layers/sigmoid_layer.hpp"
+#include "caffe/layers/softmax_layer.hpp"
+#include "caffe/layers/tanh_layer.hpp"
+#include "caffe/layers/spp_layer.hpp"
+#include "caffe/layers/im2col_layer.hpp"
+#include "caffe/layers/downsample_layer.hpp"
+#include "caffe/layers/lrn_layer.hpp"
+#include "caffe/layers/resample_layer.hpp"
+#include "caffe/layers/correlation_layer.hpp"
 
-  
+#ifdef USE_CUDNN
+#include "caffe/layers/cudnn_conv_layer.hpp"
+#include "caffe/layers/cudnn_lcn_layer.hpp"
+#include "caffe/layers/cudnn_lrn_layer.hpp"
+#include "caffe/layers/cudnn_pooling_layer.hpp"
+#include "caffe/layers/cudnn_relu_layer.hpp"
+#include "caffe/layers/cudnn_sigmoid_layer.hpp"
+#include "caffe/layers/cudnn_softmax_layer.hpp"
+#include "caffe/layers/cudnn_tanh_layer.hpp"
+#endif
+
+namespace caffe {
+#if 0
 /**
  * @brief The ResampleLayer, resamples a feature blob to a smaller or larger size
  *        using different interpolation methods
@@ -46,7 +72,8 @@ class ResampleLayer : public Layer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 /**
  * @brief Abstract base class that factors out the BLAS code common to
  *        ConvolutionLayer and DeconvolutionLayer.
@@ -199,7 +226,8 @@ class BaseConvolutionLayer : public Layer<Dtype> {
   Blob<Dtype> col_buffer_;
   Blob<Dtype> bias_multiplier_;
 };
-
+#endif
+#if 0
 /**
  * @brief Convolves the input image with a bank of learned filters,
  *        and (optionally) adds biases.
@@ -264,7 +292,8 @@ class ConvolutionLayer : public BaseConvolutionLayer<Dtype> {
   virtual inline bool reverse_dimensions() { return false; }
   virtual void compute_output_shape();
 };
-
+#endif
+#if 0
 /**
  * @brief Correlates patches from the first input image with patches from
  *        the second input image
@@ -331,7 +360,8 @@ class CorrelationLayer : public Layer<Dtype> {
   int neighborhood_grid_radius_, neighborhood_grid_width_;
 
 };
-
+#endif
+# if 0
 /**
  * @brief Convolve the input with a bank of learned filters, and (optionally)
  *        add biases, treating filters and convolution parameters in the
@@ -366,7 +396,9 @@ class DeconvolutionLayer : public BaseConvolutionLayer<Dtype> {
   virtual inline bool reverse_dimensions() { return true; }
   virtual void compute_output_shape();
 };
+#endif
 
+#if 0
 #ifdef USE_CUDNN
 /*
  * @brief cuDNN implementation of ConvolutionLayer.
@@ -422,8 +454,8 @@ class CuDNNConvolutionLayer : public ConvolutionLayer<Dtype> {
   void **workspace;  // aliases into workspaceData
 };
 #endif
-
-
+#endif
+#if 0
 /**
  * @brief Phil's Downsample Layer
  * Takes a blob and downsamples width and height to given size
@@ -463,7 +495,8 @@ class DownsampleLayer : public Layer<Dtype> {
   int top_width_;
   int top_height_;
 };
-
+#endif
+#if 0
 /**
  * @brief A helper for image operations that rearranges image regions into
  *        column vectors.  Used by ConvolutionLayer to perform convolution
@@ -512,11 +545,14 @@ class Im2colLayer : public Layer<Dtype> {
 
   bool force_nd_im2col_;
 };
+#endif
 
+#if 0
 // Forward declare PoolingLayer and SplitLayer for use in LRNLayer.
 template <typename Dtype> class PoolingLayer;
 template <typename Dtype> class SplitLayer;
-
+#endif
+#if 0
 /**
  * @brief Normalize the input in a local region across or within feature maps.
  *
@@ -591,9 +627,9 @@ class LRNLayer : public Layer<Dtype> {
   Blob<Dtype> product_input_;
   vector<Blob<Dtype>*> product_bottom_vec_;
 };
-
+#endif
+#if 0
 #ifdef USE_CUDNN
-
 template <typename Dtype>
 class CuDNNLRNLayer : public LRNLayer<Dtype> {
  public:
@@ -619,7 +655,6 @@ class CuDNNLRNLayer : public LRNLayer<Dtype> {
   int size_;
   Dtype alpha_, beta_, k_;
 };
-
 template <typename Dtype>
 class CuDNNLCNLayer : public LRNLayer<Dtype> {
  public:
@@ -649,9 +684,10 @@ class CuDNNLCNLayer : public LRNLayer<Dtype> {
   size_t tempDataSize;
   void *tempData1, *tempData2;
 };
-
+#endif
 #endif
 
+#if 0
 /**
  * @brief Pools the input image by taking the max, average, etc. within regions.
  *
@@ -697,7 +733,8 @@ class PoolingLayer : public Layer<Dtype> {
   Blob<Dtype> rand_idx_;
   Blob<int> max_idx_;
 };
-
+#endif
+#if 0
 #ifdef USE_CUDNN
 /*
  * @brief cuDNN implementation of PoolingLayer.
@@ -730,7 +767,8 @@ class CuDNNPoolingLayer : public PoolingLayer<Dtype> {
   cudnnPoolingMode_t        mode_;
 };
 #endif
-
+#endif
+#if 0
 /**
  * @brief Does spatial pyramid pooling on the input image
  *        by taking the max, average, etc. within regions
@@ -792,7 +830,7 @@ class SPPLayer : public Layer<Dtype> {
   /// the internal Concat layers that the Flatten layers feed into
   shared_ptr<ConcatLayer<Dtype> > concat_layer_;
 };
-
+#endif
 }  // namespace caffe
 
 #endif  // CAFFE_VISION_LAYERS_HPP_

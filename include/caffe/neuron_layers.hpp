@@ -8,10 +8,15 @@
 #include "caffe/blob.hpp"
 #include "caffe/common.hpp"
 #include "caffe/layer.hpp"
+#include "caffe/layers/sigmoid_layer.hpp"
+#include "caffe/layers/relu_layer.hpp"
+#include "caffe/layers/log_layer.hpp"
+#include "caffe/layers/bnll_layer.hpp"
+
 #include "caffe/proto/caffe.pb.h"
 
 namespace caffe {
-
+#if 0
 /**
  * @brief An interface for layers that take one blob as input (@f$ x @f$)
  *        and produce one equally-sized blob as output (@f$ y @f$), where
@@ -29,7 +34,8 @@ class NeuronLayer : public Layer<Dtype> {
   virtual inline int ExactNumBottomBlobs() const { return 1; }
   virtual inline int ExactNumTopBlobs() const { return 1; }
 };
-
+#endif
+#if 0
 /**
  * @brief Computes @f$ y = |x| @f$
  *
@@ -81,7 +87,8 @@ class AbsValLayer : public NeuronLayer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 /**
  * @brief Computes @f$ y = x + \log(1 + \exp(-x)) @f$ if @f$ x > 0 @f$;
  *        @f$ y = \log(1 + \exp(x)) @f$ otherwise.
@@ -135,7 +142,8 @@ class BNLLLayer : public NeuronLayer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 /**
  * @brief During training only, sets a random portion of @f$x@f$ to 0, adjusting
  *        the rest of the vector magnitude accordingly.
@@ -199,7 +207,8 @@ class DropoutLayer : public NeuronLayer<Dtype> {
   Dtype scale_;
   unsigned int uint_thres_;
 };
-
+#endif
+#if 0
 /**
  * @brief Computes @f$ y = \gamma ^ {\alpha x + \beta} @f$,
  *        as specified by the scale @f$ \alpha @f$, shift @f$ \beta @f$,
@@ -263,7 +272,8 @@ class ExpLayer : public NeuronLayer<Dtype> {
 
   Dtype inner_scale_, outer_scale_;
 };
-
+#endif
+#if 0
 /**
  * @brief Computes @f$ y = log_{\gamma}(\alpha x + \beta) @f$,
  *        as specified by the scale @f$ \alpha @f$, shift @f$ \beta @f$,
@@ -329,7 +339,8 @@ class LogLayer : public NeuronLayer<Dtype> {
   Dtype input_scale_, input_shift_;
   Dtype backward_num_scale_;
 };
-
+#endif
+#if 0
 /**
  * @brief Computes @f$ y = (\alpha x + \beta) ^ \gamma @f$,
  *        as specified by the scale @f$ \alpha @f$, shift @f$ \beta @f$,
@@ -402,7 +413,8 @@ class PowerLayer : public NeuronLayer<Dtype> {
   /// @brief Result of @f$ \alpha \gamma @f$
   Dtype diff_scale_;
 };
-
+#endif
+#if 0
 /**
  * @brief Rectified Linear Unit non-linearity @f$ y = \max(0, x) @f$.
  *        The simple max is fast to compute, and the function does not saturate.
@@ -471,7 +483,8 @@ class ReLULayer : public NeuronLayer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 #ifdef USE_CUDNN
 /**
  * @brief CuDNN acceleration of ReLULayer.
@@ -499,7 +512,8 @@ class CuDNNReLULayer : public ReLULayer<Dtype> {
   cudnnTensorDescriptor_t top_desc_;
 };
 #endif
-
+#endif
+#if 0
 /**
  * @brief Sigmoid function non-linearity @f$
  *         y = (1 + \exp(-x))^{-1}
@@ -554,7 +568,8 @@ class SigmoidLayer : public NeuronLayer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 #ifdef USE_CUDNN
 /**
  * @brief CuDNN acceleration of SigmoidLayer.
@@ -582,7 +597,8 @@ class CuDNNSigmoidLayer : public SigmoidLayer<Dtype> {
   cudnnTensorDescriptor_t top_desc_;
 };
 #endif
-
+#endif
+#if 0
 /**
  * @brief TanH hyperbolic tangent non-linearity @f$
  *         y = \frac{\exp(2x) - 1}{\exp(2x) + 1}
@@ -639,7 +655,8 @@ class TanHLayer : public NeuronLayer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 };
-
+#endif
+#if 0
 #ifdef USE_CUDNN
 /**
  * @brief CuDNN acceleration of TanHLayer.
@@ -667,7 +684,7 @@ class CuDNNTanHLayer : public TanHLayer<Dtype> {
   cudnnTensorDescriptor_t top_desc_;
 };
 #endif
-
+#endif
 /**
  * @brief Tests whether the input exceeds a threshold: outputs 1 for inputs
  *        above threshold; 0 otherwise.

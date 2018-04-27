@@ -1,13 +1,7 @@
 #include <vector>
-#include <stdio.h>
 
-#include "caffe/filler.hpp"
-#include "caffe/layer.hpp"
-#include "caffe/util/im2col.hpp"
-#include "caffe/util/math_functions.hpp"
-#include "caffe/vision_layers.hpp"
+#include "caffe/layers/correlation_layer.hpp"
 
-#include "caffe/caffe.hpp"
 
 #define ROUND_OFF 50000
 

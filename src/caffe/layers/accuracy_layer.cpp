@@ -2,11 +2,10 @@
 #include <utility>
 #include <vector>
 
-#include "caffe/loss_layers.hpp"
+#include "caffe/layers/accuracy_layer.hpp"
 #include "caffe/util/math_functions.hpp"
 
 namespace caffe {
-
 template <typename Dtype>
 void AccuracyLayer<Dtype>::LayerSetUp(
   const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {

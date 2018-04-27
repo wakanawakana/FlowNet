@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <vector>
 
+#include "caffe/layers/prelu_layer.hpp"
 #include "caffe/filler.hpp"
-#include "caffe/neuron_layers.hpp"
 
 namespace caffe {
 

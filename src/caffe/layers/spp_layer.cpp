@@ -1,7 +1,12 @@
 #include <algorithm>
 #include <vector>
 
-#include "caffe/vision_layers.hpp"
+#include "caffe/layer.hpp"
+#include "caffe/layers/concat_layer.hpp"
+#include "caffe/layers/flatten_layer.hpp"
+#include "caffe/layers/pooling_layer.hpp"
+#include "caffe/layers/split_layer.hpp"
+#include "caffe/layers/spp_layer.hpp"
 
 namespace caffe {
 

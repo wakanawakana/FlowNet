@@ -1,7 +1,7 @@
 #include <boost/thread.hpp>
 #include <vector>
 
-#include "caffe/data_layers.hpp"
+#include "caffe/layers/base_data_layer.hpp"
 
 namespace caffe {
 

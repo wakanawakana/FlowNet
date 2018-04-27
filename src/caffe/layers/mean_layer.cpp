@@ -6,9 +6,7 @@
 
 #include "google/protobuf/descriptor.h"
 #include "google/protobuf/descriptor.h"
-#include "caffe/layer.hpp"
-#include "caffe/vision_layers.hpp"
-#include "caffe/data_layers.hpp"
+#include "caffe/layers/mean_layer.hpp"
 #include "caffe/util/rng.hpp"
 #include "caffe/util/math_functions.hpp"
 

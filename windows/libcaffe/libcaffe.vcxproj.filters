@@ -425,16 +425,7 @@
     <ClInclude Include="..\..\include\caffe\solver_factory.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\caffe\loss_layers.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\caffe\neuron_layers.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\caffe\common_layers.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\caffe\data_layers.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\caffe\layers\absval_layer.hpp">
@@ -664,6 +655,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\caffe\flownet_layers.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\caffe\layers\mean_layer.hpp">
+      <Filter>include\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\caffe\layers\l1loss_layer.hpp">
+      <Filter>include\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\caffe\layers\flo_data_layer.hpp">
+      <Filter>include\layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
-#ifndef CAFFE_DATA_LAYERS_HPP_
-#define CAFFE_DATA_LAYERS_HPP_
+#ifndef CAFFE_BASEDATA_LAYERS_HPP_
+#define CAFFE_BASEDATA_LAYERS_HPP_
 
 #include <vector>
 
@@ -83,4 +83,4 @@ class BasePrefetchingDataLayer :
 
 }  // namespace caffe
 
-#endif  // CAFFE_DATA_LAYERS_HPP_
+#endif  // CAFFE_BASEDATA_LAYERS_HPP_

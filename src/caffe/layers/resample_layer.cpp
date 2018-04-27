@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "caffe/layer.hpp"
-#include "caffe/vision_layers.hpp"
+#include "caffe/layers/resample_layer.hpp"
 #include "caffe/util/math_functions.hpp"
 
 #define min(a,b) ((a<b)?a:b)
